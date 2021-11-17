@@ -41,6 +41,10 @@ ActiveRecord::Schema.define do
     t.timestamp :manufactured_at, default: -> { "CURRENT_TIMESTAMP" }
   end
 
+  create_table :album, force: true do |t|
+    t.references :artist
+  end
+
   create_table :articles, force: true do |t|
   end
 
@@ -52,6 +56,9 @@ ActiveRecord::Schema.define do
   create_table :articles_tags, force: true do |t|
     t.references :article
     t.references :tag
+  end
+
+  create_table :artists, force: true do |t|
   end
 
   create_table :audit_logs, force: true do |t|
@@ -1003,6 +1010,10 @@ ActiveRecord::Schema.define do
   create_table :shop_accounts, force: true do |t|
     t.references :customer
     t.references :customer_carrier
+  end
+
+  create_table :songs, force: true do |t|
+    t.integer :album
   end
 
   create_table :speedometers, force: true, id: false do |t|

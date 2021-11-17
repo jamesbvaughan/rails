@@ -36,12 +36,16 @@ require "models/family_tree"
 require "models/section"
 require "models/seminar"
 require "models/session"
+require "models/artist"
+require "models/album"
+require "models/song"
 
 class HasManyThroughAssociationsTest < ActiveRecord::TestCase
   fixtures :posts, :readers, :people, :comments, :authors, :categories, :taggings, :tags,
            :owners, :pets, :toys, :jobs, :references, :companies, :members, :author_addresses,
            :subscribers, :books, :subscriptions, :developers, :categorizations, :essays,
-           :categories_posts, :clubs, :memberships, :organizations, :author_favorites
+           :categories_posts, :clubs, :memberships, :organizations, :author_favorites, :artists,
+           :albums, :songs
 
   # Dummies to force column loads so query counts are clean.
   def setup
@@ -913,6 +917,10 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
 
   def test_has_many_association_through_a_has_many_association_with_nonstandard_primary_keys
     assert_equal 2, owners(:blackbeard).toys.count
+  end
+
+  def test_has_many_association_through_a_has_many_association_with_a_nonstandard_table_name_and_foreign_key
+    assert_equal 3, artists(:the_beach_boys).songs.count
   end
 
   def test_find_on_has_many_association_collection_with_include_and_conditions
